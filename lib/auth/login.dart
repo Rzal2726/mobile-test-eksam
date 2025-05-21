@@ -205,7 +205,6 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             );
                           },
-                          icon: const Icon(Icons.login, color: Colors.white),
                           label:
                               loading
                                   ? const SizedBox(

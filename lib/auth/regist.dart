@@ -196,7 +196,10 @@ class _RegistPageState extends State<RegistPage> {
                         width: double.infinity,
                         child: OutlinedButton.icon(
                           onPressed: loading ? null : regist,
-                          icon: const Icon(Icons.login, color: Colors.white),
+                          icon: const Icon(
+                            Icons.app_registration,
+                            color: Colors.white,
+                          ),
                           label:
                               loading
                                   ? const SizedBox(
@@ -237,7 +240,6 @@ class _RegistPageState extends State<RegistPage> {
                               ),
                             );
                           },
-                          icon: const Icon(Icons.login, color: Colors.white),
                           label:
                               loading
                                   ? const SizedBox(

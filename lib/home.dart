@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tryout_app/tryout_page/tryout.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:tryout_app/auth/login.dart';
+import 'package:tryout_app/api_helper.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -28,10 +31,64 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   void goToTryout() {
+    context.loaderOverlay.show();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => TryOutPage()),
     ); // pastikan route ini sudah diset
+    context.loaderOverlay.hide();
+  }
+
+  // Fungsi untuk menampilkan dialog konfirmasi logout
+  Future<bool?> showLogoutConfirmationDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Konfirmasi Logout"),
+          content: const Text("Apakah kamu yakin ingin logout?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false), // batal logout
+              child: const Text("Batal"),
+            ),
+            ElevatedButton(
+              onPressed:
+                  () => Navigator.of(context).pop(true), // konfirmasi logout
+              child: const Text("Logout"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> logout(BuildContext context) async {
+    final confirm = await showLogoutConfirmationDialog(context);
+    if (confirm != true) return;
+
+    try {
+      context.loaderOverlay.show();
+
+      // Panggil API logout
+      await ApiService.post('/auth/logout', {});
+
+      // Bersihkan data lokal
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+    } catch (e) {
+      print("Logout error: $e");
+      // Tampilkan snackbar error jika perlu
+    } finally {
+      context.loaderOverlay.hide();
+    }
+
+    // Navigasi ke halaman login setelah loading hilang
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
   }
 
   @override
@@ -51,6 +108,15 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+            onPressed: () {
+              logout(context);
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Card(
