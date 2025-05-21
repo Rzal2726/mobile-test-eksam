@@ -32,7 +32,7 @@ class _SplashscreenState extends State<Splashscreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.flutter_dash, size: 100, color: Colors.blue),
+            Icon(Icons.book, size: 100, color: Colors.blue),
             SizedBox(height: 20),
             Text(
               'Try Out App',
