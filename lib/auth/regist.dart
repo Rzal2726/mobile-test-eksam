@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tryout_app/api_helper.dart';
 import 'package:tryout_app/auth/login.dart';
-import 'package:tryout_app/home.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'dart:ui';
 
@@ -93,6 +91,9 @@ class _RegistPageState extends State<RegistPage> {
       });
 
       if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Berhasil membuat akun")));
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const LoginPage()),
@@ -148,7 +149,7 @@ class _RegistPageState extends State<RegistPage> {
                         decoration: const InputDecoration(
                           labelText: "Nama",
                           border: UnderlineInputBorder(),
-                          labelStyle: const TextStyle(color: Colors.white),
+                          labelStyle: TextStyle(color: Colors.white),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.white,
@@ -170,7 +171,7 @@ class _RegistPageState extends State<RegistPage> {
                         decoration: const InputDecoration(
                           labelText: "Email",
                           border: UnderlineInputBorder(),
-                          labelStyle: const TextStyle(color: Colors.white),
+                          labelStyle: TextStyle(color: Colors.white),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.white,

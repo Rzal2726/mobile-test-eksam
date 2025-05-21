@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tryout_app/api_helper.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'dart:convert';
 import 'package:tryout_app/auth/login.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:tryout_app/home.dart';
@@ -30,15 +28,6 @@ class _ResultPageState extends State<ResultPage> {
       username = prefs.getString('username') ?? 'User';
       lastScore = prefs.getString('last-score') ?? 'Tidak Ada';
     });
-  }
-
-  void goToTryout() {
-    context.loaderOverlay.show();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ResultPage()),
-    ); // pastikan route ini sudah diset
-    context.loaderOverlay.hide();
   }
 
   // Fungsi untuk menampilkan dialog konfirmasi logout

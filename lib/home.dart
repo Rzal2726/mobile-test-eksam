@@ -32,7 +32,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
   void goToTryout() {
     context.loaderOverlay.show();
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => TryOutPage()),
     ); // pastikan route ini sudah diset
